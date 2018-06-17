@@ -3,6 +3,7 @@ package com.frederico.api.resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,14 +15,13 @@ import com.frederico.api.model.Pedido;
 @RequestMapping("/v1/public/pedidos")
 public class PedidoResource {
 
-	// Realiza pedido do carrinho vinculado a SessionID
-	@PostMapping("/{session_id}")
-	public String realizaPedido(@PathVariable String session_id) {
-		return "Pedido realizado com sucesso para SessionId: " + session_id
-				+ ". Seu pedido é o nº: 342342634645";
+	// Realizar pedido
+	@PostMapping()
+	public String realizaPedido(@RequestBody PedidoResource.DadosPedido carrinho_id) {
+		return "Pedido realizado com sucesso. Seu pedido é o nº: 737351008735";
 	}
 	
-	// Consulta status do pedido
+	// Consultar status do pedido
 	@GetMapping("/{id_pedido}")
 	public Pedido consultaStatusPedido(@PathVariable Long id_pedido) {
 		Pedido pedido = new Pedido(id_pedido);
@@ -37,6 +37,25 @@ public class PedidoResource {
 		pedido.getItens().add(item_3);
 		
 		return pedido;
+		
+	}
+	
+	public static class DadosPedido {
+		private Long carrinho_id;
+		
+		public DadosPedido(){}
+
+		public DadosPedido(Long carrinho_id) {
+			this.carrinho_id = carrinho_id;
+		}
+
+		public Long getCarrinho_id() {
+			return carrinho_id;
+		}
+
+		public void setCarrinho_id(Long carrinho_id) {
+			this.carrinho_id = carrinho_id;
+		}
 		
 	}
 	
